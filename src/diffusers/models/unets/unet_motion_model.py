@@ -793,7 +793,7 @@ class UNetMotionModel(ModelMixin, ConfigMixin, UNet2DConditionLoadersMixin):
 
         emb = self.time_embedding(t_emb, timestep_cond)
         emb = emb.repeat_interleave(repeats=num_frames, dim=0)
-        encoder_hidden_states = encoder_hidden_states.repeat_interleave(repeats=num_frames, dim=0)
+        # encoder_hidden_states = encoder_hidden_states.repeat_interleave(repeats=num_frames, dim=0)
 
         if self.encoder_hid_proj is not None and self.config.encoder_hid_dim_type == "ip_image_proj":
             if "image_embeds" not in added_cond_kwargs:
@@ -802,7 +802,7 @@ class UNetMotionModel(ModelMixin, ConfigMixin, UNet2DConditionLoadersMixin):
                 )
             image_embeds = added_cond_kwargs.get("image_embeds")
             image_embeds = self.encoder_hid_proj(image_embeds)
-            image_embeds = [image_embed.repeat_interleave(repeats=num_frames, dim=0) for image_embed in image_embeds]
+            # image_embeds = [image_embed.repeat_interleave(repeats=num_frames, dim=0) for image_embed in image_embeds]
             encoder_hidden_states = (encoder_hidden_states, image_embeds)
 
         # 2. pre-process
