@@ -106,10 +106,6 @@ class LoraLoaderMixin:
         if not USE_PEFT_BACKEND:
             raise ValueError("PEFT backend is required for this method.")
 
-        # if a dict is passed, copy it instead of modifying it inplace
-        if isinstance(pretrained_model_name_or_path_or_dict, dict):
-            pretrained_model_name_or_path_or_dict = pretrained_model_name_or_path_or_dict.copy()
-
         # First, ensure that the checkpoint is a compatible one and can be successfully loaded.
         state_dict, network_alphas = self.lora_state_dict(pretrained_model_name_or_path_or_dict, **kwargs)
 
@@ -1232,10 +1228,6 @@ class StableDiffusionXLLoraLoaderMixin(LoraLoaderMixin):
         # We could have accessed the unet config from `lora_state_dict()` too. We pass
         # it here explicitly to be able to tell that it's coming from an SDXL
         # pipeline.
-
-        # if a dict is passed, copy it instead of modifying it inplace
-        if isinstance(pretrained_model_name_or_path_or_dict, dict):
-            pretrained_model_name_or_path_or_dict = pretrained_model_name_or_path_or_dict.copy()
 
         # First, ensure that the checkpoint is a compatible one and can be successfully loaded.
         state_dict, network_alphas = self.lora_state_dict(
